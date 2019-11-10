@@ -28,7 +28,7 @@ For example
 
 ## Continuous integration
 
-This role has a travis config leveraging molecule for testing
+This role has a travis config leveraging molecule for testing, also kitchen with docker and vagrant
 
 Once you ensured all necessary roles are present, You can test with:
 ```
@@ -36,6 +36,20 @@ $ pip install molecule docker
 $ molecule test
 $ molecule --debug test
 $ MOLECULE_DISTRO=ubuntu:16.04 molecule test --destroy=never
+```
+
+```
+$ gem install kitchen-ansible kitchen-docker kitchen-sync
+$ cd /path/to/roles/juju4.polarproxy
+$ kitchen verify
+$ kitchen login
+$ KITCHEN_YAML=".kitchen.docker.yml" kitchen verify
+```
+or
+```
+$ cd /path/to/roles/juju4.polarproxy/test/vagrant
+$ vagrant up
+$ vagrant ssh
 ```
 
 ## Troubleshooting & Known issues
