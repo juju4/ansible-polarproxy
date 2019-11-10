@@ -26,14 +26,14 @@ def test_files(host, filename, filemode, user):
 
 
 def test_curl1(host):
-    command = """curl --cacert /var/log/PolarProxy/polarproxy.cer -L -D - \
+    command = """curl -x localhost:10443 --cacert /var/log/PolarProxy/polarproxy.cer -L -D - \
             https://www.google.com"""
     cmd = host.run(command)
     assert 'HTTP/1.1 200 OK' in cmd.stdout
 
 
 def test_curl2(host):
-    command = """curl --cacert /var/log/PolarProxy/polarproxy.cer -L -D - \
+    command = """curl -x localhost:10443 --cacert /var/log/PolarProxy/polarproxy.cer -L -D - \
             https://expired.badssl.com"""
     cmd = host.run(command)
     assert 'HTTP/1.1 200 OK' in cmd.stdout

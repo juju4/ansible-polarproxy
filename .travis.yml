@@ -55,8 +55,8 @@ after_script:
   - KITCHEN_YAML=.kitchen.docker.yml kitchen exec ${suite}-${distribution}-${version//./} -c 'cat /var/log/PolarProxy/proxyflows.log'
   - KITCHEN_YAML=.kitchen.docker.yml kitchen exec ${suite}-${distribution}-${version//./} -c 'systemctl -l --no-pager status PolarProxy'
   - KITCHEN_YAML=.kitchen.docker.yml kitchen exec ${suite}-${distribution}-${version//./} -c 'journalctl -xe --no-pager'
-  - KITCHEN_YAML=.kitchen.docker.yml kitchen exec ${suite}-${distribution}-${version//./} -c 'curl -v --cacert /var/log/PolarProxy/polarproxy.cer -L -D - https://www.google.com'
-  - KITCHEN_YAML=.kitchen.docker.yml kitchen exec ${suite}-${distribution}-${version//./} -c 'curl -v --cacert /var/log/PolarProxy/polarproxy.cer -L -D - https://expired.badssl.com'
+  - KITCHEN_YAML=.kitchen.docker.yml kitchen exec ${suite}-${distribution}-${version//./} -c 'curl -v -x localhost:10443 --cacert /var/log/PolarProxy/polarproxy.cer -L -D - https://www.google.com'
+  - KITCHEN_YAML=.kitchen.docker.yml kitchen exec ${suite}-${distribution}-${version//./} -c 'curl -v -x localhost:10443 --cacert /var/log/PolarProxy/polarproxy.cer -L -D - https://expired.badssl.com'
 
   # Clean up
   - KITCHEN_YAML=.kitchen.docker.yml kitchen destroy ${suite}-${distribution}-${version//./}
