@@ -30,7 +30,7 @@ end
 describe file('/etc/systemd/system/PolarProxy.service') do
   it { should be_file }
   it { should be_mode 644 }
-  it { should be_owned_by '_root' }
+  it { should be_owned_by 'root' }
 end
 
 describe port(10443) do
