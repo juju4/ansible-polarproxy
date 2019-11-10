@@ -1,0 +1,54 @@
+[![Build Status - Master](https://travis-ci.org/juju4/ansible-polarproxy.svg?branch=master)](https://travis-ci.org/juju4/ansible-polarproxy)
+[![Build Status - Devel](https://travis-ci.org/juju4/ansible-polarproxy.svg?branch=devel)](https://travis-ci.org/juju4/ansible-polarproxy/branches)
+
+# PolarProxy install
+
+This role will install [Netresec PolarProxy](https://www.netresec.com/?page=PolarProxy)
+
+# Requirements & Dependencies
+
+### Ansible
+It was tested on the following versions:
+ * 2.8
+
+### Operating systems
+
+Tested with molecule on Ubuntu 16.04 and 18.04
+
+## Example Playbook
+
+Just include this role in your list.
+For example
+
+```
+- host: all
+  roles:
+    - juju4.polarproxy
+```
+
+## Continuous integration
+
+This role has a travis config leveraging molecule for testing
+
+Once you ensured all necessary roles are present, You can test with:
+```
+$ pip install molecule docker
+$ molecule test
+$ molecule --debug test
+$ MOLECULE_DISTRO=ubuntu:16.04 molecule test --destroy=never
+```
+
+## Troubleshooting & Known issues
+
+*
+```
+Oct 01 00:04:31 testhostname PolarProxy[49741]: [10443] n.n.n.n -> N/A System.IO.IOException : The handshake failed due to an unexpected packet format.
+Oct 01 00:04:31 testhostname PolarProxy[49741]: [10443] n.n.n.n -> N/A Internal and/or external SSL session did not authenticate successfully
+Oct 10 00:07:02 testcentral PolarProxy[49741]: [10443] n.n.n.n -> N/A System.IO.IOException : Authentication failed because the remote party has closed the transport stream.
+Oct 10 00:07:02 testcentral PolarProxy[49741]: [10443] n.n.n.n -> N/A Internal and/or external SSL session did not authenticate successfully
+```
+https://social.technet.microsoft.com/wiki/contents/articles/40216.azure-troubleshooting-authentication-failed-because-the-remote-party-has-closed-the-transport-stream.aspx
+
+## License
+
+BSD 2-clause

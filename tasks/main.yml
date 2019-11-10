@@ -1,0 +1,11 @@
+---
+
+- include: polarproxy.yml
+
+- name: Install testing tools
+  package:
+    name:
+      - iproute2
+      - curl
+    state: present
+  when: polarproxy_testing

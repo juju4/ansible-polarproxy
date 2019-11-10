@@ -1,0 +1,16 @@
+---
+galaxy_info:
+  author: juju4
+  description: Netresec PolarProxy install
+  license: BSD
+  min_ansible_version: 1.2
+  platforms:
+    - name: Ubuntu
+      versions:
+        - bionic
+        - xenial
+  galaxy_tags:
+    - system
+    - security
+    - proxy
+dependencies: []

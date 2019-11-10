@@ -1,0 +1,64 @@
+---
+# https://www.netresec.com/?page=PolarProxy
+
+- name: add polarproxy user
+  user:
+    name: "{{ polarproxy_user }}"
+    comment: PolarProxy service
+    system: true
+    home: "{{ polarproxy_home }}"
+
+- name: Ensure few directories exists
+  file:
+    dest: "{{ item }}"
+    owner: "{{ polarproxy_user }}"
+    group: root
+    mode: '0775'
+    state: directory
+  with_items:
+    - /var/log/PolarProxy
+    - "{{ polarproxy_home }}/PolarProxy"
+
+- name: Fetch PolarProxy archive
+  get_url:
+    url: "{{ polarproxy_url }}"
+    dest: "{{ polarproxy_home }}/polarproxy.tar.gz"
+    mode: '0600'
+    owner: "{{ polarproxy_user }}"
+    checksum: "{{ polarproxy_hash | default(omit) }}"
+
+- name: Unarchive PolarProxy
+  unarchive:
+    src: "{{ polarproxy_home }}/polarproxy.tar.gz"
+    dest: "{{ polarproxy_home }}/PolarProxy"
+    remote_src: true
+  become: true
+  become_user: "{{ polarproxy_user }}"
+
+- name: Ensure PolarProxy systemd service is configured
+  template:
+    src: PolarProxy.service.j2
+    dest: /etc/systemd/system/PolarProxy.service
+    mode: '0644'
+  notify:
+    - reload systemd
+
+- meta: flush_handlers
+
+- name: Ensure PolarProxy is enabled and started
+  service:
+    name: PolarProxy
+    enabled: true
+    state: started
+  when: not (ansible_virtualization_type is defined and ansible_virtualization_type == "docker")
+
+- name: Docker | start polarproxy
+  shell: >
+    {{ polarproxy_home }}/PolarProxy/PolarProxy -v -p 10443,80,443 \
+      -x /var/log/PolarProxy/polarproxy.cer -f /var/log/PolarProxy/proxyflows.log \
+      -o /var/log/PolarProxy/ --certhttp 10080 --insecure &
+  args:
+    creates: /var/log/PolarProxy/polarproxy.cer
+  become: true
+  become_user: "{{ polarproxy_user }}"
+  when: (ansible_virtualization_type is defined and ansible_virtualization_type == "docker")
