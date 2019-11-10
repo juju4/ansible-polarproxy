@@ -16,7 +16,7 @@ before_script:
   - cd juju4.polarproxy
 
 script:
-  - molecule test
+  - MOLECULE_NO_LOG=no molecule test
 
 notifications:
 webhooks: https://galaxy.ansible.com/api/v1/notifications/
