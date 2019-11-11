@@ -5,8 +5,22 @@
 
 - include: polarproxy.yml
 
-- name: Install testing tools
+- name: Testing | Install testing tools
   package:
     name: "{{ polarproxy_testing_pkgs }}"
     state: present
+  when: polarproxy_testing
+
+- name: Testing | Redirect 443 traffic to PolarProxy for user nobody
+  iptables:
+    table: nat
+    chain: OUTPUT
+    protocol: tcp
+    destination_port: 443
+    ctstate: NEW
+    syn: match
+    jump: REDIRECT
+    to_ports: 10443
+    comment: Redirect 443 traffic to PolarProxy for user nobody
+    uid_owner: 65534
   when: polarproxy_testing

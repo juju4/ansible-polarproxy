@@ -61,7 +61,7 @@ Oct 01 00:04:31 testhostname PolarProxy[49741]: [10443] n.n.n.n -> N/A Internal 
 Oct 10 00:07:02 testcentral PolarProxy[49741]: [10443] n.n.n.n -> N/A System.IO.IOException : Authentication failed because the remote party has closed the transport stream.
 Oct 10 00:07:02 testcentral PolarProxy[49741]: [10443] n.n.n.n -> N/A Internal and/or external SSL session did not authenticate successfully
 ```
-https://social.technet.microsoft.com/wiki/contents/articles/40216.azure-troubleshooting-authentication-failed-because-the-remote-party-has-closed-the-transport-stream.aspx
+PolarProxy works only as Transparent Proxy and requires firewall redirection. It can't be explicit through browser.
 
 ## License
 
