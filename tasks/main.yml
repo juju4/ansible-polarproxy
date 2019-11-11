@@ -16,11 +16,11 @@
     table: nat
     chain: OUTPUT
     protocol: tcp
-    destination_port: 443
+    destination_port: '443'
     ctstate: NEW
     syn: match
     jump: REDIRECT
-    to_ports: 10443
+    to_ports: '10443'
     comment: Redirect 443 traffic to PolarProxy for user nobody
-    uid_owner: 65534
+    uid_owner: '65534'
   when: polarproxy_testing
