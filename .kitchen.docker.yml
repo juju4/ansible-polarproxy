@@ -3,6 +3,9 @@ driver:
   name: docker
 ## https://github.com/test-kitchen/kitchen-docker/issues/54
   use_sudo: false
+## to use iptables inside docker
+  cap_add:
+    - NET_ADMIN
 
 transport:
   name: sftp
