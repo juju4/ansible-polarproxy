@@ -39,14 +39,16 @@ end
 
 describe command('curl -k --cacert /var/log/PolarProxy/polarproxy.cer -L -D - https://www.google.com') do
   let(:sudo_options) { '-u nobody -H' }
-  its(:stdout) { should match /HTTP\/1.1 200 OK/ }
-  its(:stderr) { should match /No such file or directory/ }
+  its(:stdout) { should match /<title>Google<\/title>/ }
+  its(:stdout) { should match /HTTP\/2 200/ }
+  its(:stderr) { should_not match /No such file or directory/ }
   its(:exit_status) { should eq 0 }
 end
 
 describe command('curl -k --cacert /var/log/PolarProxy/polarproxy.cer -L -D - https://expired.badssl.com') do
   let(:sudo_options) { '-u nobody -H' }
   its(:stdout) { should match /HTTP\/1.1 200 OK/ }
-  its(:stderr) { should match /No such file or directory/ }
+  its(:stderr) { should_not match /No such file or directory/ }
+#  its(:stderr) { should_not match /OpenSSL SSL_connect: SSL_ERROR_SYSCALL in connection to/ }
   its(:exit_status) { should eq 0 }
 end
