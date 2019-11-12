@@ -40,7 +40,8 @@ end
 describe command('curl -k --cacert /var/log/PolarProxy/polarproxy.cer -L -D - https://www.google.com') do
   let(:sudo_options) { '-u nobody -H' }
   its(:stdout) { should match /<title>Google<\/title>/ }
-  its(:stdout) { should match /HTTP\/2 200/ }
+# HTTP/1.1 on Centos7 and Ubuntu 16.04, 2 on Ubuntu 18.04
+  its(:stdout) { should match /HTTP\/.* 200/ }
   its(:stderr) { should_not match /No such file or directory/ }
   its(:exit_status) { should eq 0 }
 end
