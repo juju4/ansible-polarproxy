@@ -37,14 +37,14 @@ describe port(10443) do
   it { should be_listening }
 end
 
-describe command('curl --cacert /var/log/PolarProxy/polarproxy.cer -L -D - https://www.google.com') do
+describe command('curl -k --cacert /var/log/PolarProxy/polarproxy.cer -L -D - https://www.google.com') do
   let(:sudo_options) { '-u nobody -H' }
   its(:stdout) { should match /HTTP\/1.1 200 OK/ }
   its(:stderr) { should match /No such file or directory/ }
   its(:exit_status) { should eq 0 }
 end
 
-describe command('curl --cacert /var/log/PolarProxy/polarproxy.cer -L -D - https://expired.badssl.com') do
+describe command('curl -k --cacert /var/log/PolarProxy/polarproxy.cer -L -D - https://expired.badssl.com') do
   let(:sudo_options) { '-u nobody -H' }
   its(:stdout) { should match /HTTP\/1.1 200 OK/ }
   its(:stderr) { should match /No such file or directory/ }
