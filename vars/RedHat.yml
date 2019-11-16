@@ -4,3 +4,5 @@ polarproxy_testing_pkgs:
   - iproute
   - curl
   - iptables
+
+nobody_uid: '99'

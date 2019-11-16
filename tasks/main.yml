@@ -28,5 +28,5 @@
     jump: REDIRECT
     to_ports: '10443'
     comment: Redirect 443 traffic to PolarProxy for user nobody
-    uid_owner: '65534'
+    uid_owner: "{{ nobody_uid }}"
   when: polarproxy_testing
