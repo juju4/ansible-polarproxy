@@ -25,7 +25,7 @@ def test_files(host, filename, filemode, user):
 #    assert(socket.is_listening)
 
 def test_curl1(host):
-    command = """curl -k --cacert /var/log/PolarProxy/polarproxy.cer -L -D - \
+    command = """curl -k --cacert /var/log/PolarProxy/polarproxy.pem -L -D - \
             https://www.google.com"""
     with host.sudo("nobody"):
         cmd = host.run(command)
@@ -34,7 +34,7 @@ def test_curl1(host):
 
 
 def test_curl2(host):
-    command = """curl -k --cacert /var/log/PolarProxy/polarproxy.cer -L -D - \
+    command = """curl -k --cacert /var/log/PolarProxy/polarproxy.pem -L -D - \
             https://expired.badssl.com"""
     with host.sudo("nobody"):
         cmd = host.run(command)

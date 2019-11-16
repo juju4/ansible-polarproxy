@@ -37,7 +37,7 @@ describe port(10443) do
   it { should be_listening }
 end
 
-describe command('curl -k --cacert /var/log/PolarProxy/polarproxy.cer -L -D - https://www.google.com') do
+describe command('curl -k --cacert /var/log/PolarProxy/polarproxy.pem -L -D - https://www.google.com') do
   let(:sudo_options) { '-u nobody -H' }
   its(:stdout) { should match /<title>Google<\/title>/ }
 # HTTP/1.1 on Centos7 and Ubuntu 16.04, 2 on Ubuntu 18.04
@@ -46,7 +46,7 @@ describe command('curl -k --cacert /var/log/PolarProxy/polarproxy.cer -L -D - ht
   its(:exit_status) { should eq 0 }
 end
 
-describe command('curl -k --cacert /var/log/PolarProxy/polarproxy.cer -L -D - https://expired.badssl.com') do
+describe command('curl -k --cacert /var/log/PolarProxy/polarproxy.pem -L -D - https://expired.badssl.com') do
   let(:sudo_options) { '-u nobody -H' }
   its(:stdout) { should match /HTTP\/1.1 200 OK/ }
   its(:stderr) { should_not match /No such file or directory/ }
