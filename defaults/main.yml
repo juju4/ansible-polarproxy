@@ -3,6 +3,6 @@
 polarproxy_user: _polarproxy
 polarproxy_home: /var/_polarproxy
 polarproxy_url: 'https://www.netresec.com/?Download=PolarProxy'
-polarproxy_hash: sha256:48a439b906a81e9915c1eb1bc1bcedb7afdecbd77114b4c72d147aa88391d50f
+polarproxy_hash: sha256:f166d400d11bdbc3e1fc7697bad9afaf9760b86b52e47311b0ad41ff49a030c2
 
 polarproxy_testing: true
