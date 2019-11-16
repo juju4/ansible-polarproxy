@@ -11,6 +11,12 @@
     state: present
   when: polarproxy_testing
 
+- name: Testing | Export PolarProxy DER certificate to PEM for curl
+  command: openssl x509 -inform DER -outform PEM -text -in /var/log/PolarProxy/polarproxy.cer -out /var/log/PolarProxy/polarproxy.pem
+  args:
+    creates: /var/log/PolarProxy/polarproxy.pem
+  when: polarproxy_testing
+
 - name: Testing | Redirect 443 traffic to PolarProxy for user nobody
   iptables:
     table: nat
