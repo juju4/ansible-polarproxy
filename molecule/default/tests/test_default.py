@@ -25,7 +25,7 @@ def test_files(host, filename, filemode, user):
 #    assert(socket.is_listening)
 
 def test_curl1(host):
-    command = """curl -k --cacert /var/log/PolarProxy/polarproxy.pem -L -D - \
+    command = """curl --cacert /var/log/PolarProxy/polarproxy.pem -L -D - \
             https://www.google.com"""
     with host.sudo("nobody"):
         cmd = host.run(command)
