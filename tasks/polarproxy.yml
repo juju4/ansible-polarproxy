@@ -20,16 +20,15 @@
     - "{{ polarproxy_home }}/PolarProxy"
 
 - name: Fetch PolarProxy hash
-  get_url:
-    url: "https://www.netresec.com/?download=PolarProxy&hash=sha256"
-    dest: "{{ polarproxy_home }}/polarproxy.tar.gz.sha256"
-    mode: '0600'
-    owner: "{{ polarproxy_user }}"
+  command: "curl 'https://www.netresec.com/?download=PolarProxy&hash=sha256'"
+  args:
+    warn: false
+  register: curl_hash
 
-- name: Retrieve hash in variable
-  slurp:
-    src: "{{ polarproxy_home }}/polarproxy.tar.gz.sha256"
-  register: polarproxy_hash
+- name: Set hash
+  set_fact:
+    polarproxy_hash: "sha256:{{ curl_hash.stdout }}"
+  when: curl_hash.stdout is defined
 
 - name: Fetch PolarProxy archive
   get_url:
