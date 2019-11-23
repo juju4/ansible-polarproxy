@@ -25,6 +25,8 @@
     dest: "{{ polarproxy_home }}/polarproxy.tar.gz.sha256"
     mode: '0600'
     owner: "{{ polarproxy_user }}"
+    headers:
+      Content-Type: 'text/plain'
 
 - name: Retrieve hash in variable
   slurp:
