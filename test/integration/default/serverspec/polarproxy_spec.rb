@@ -37,7 +37,15 @@ describe port(10443) do
   it { should be_listening }
 end
 
-describe command('curl --cacert /var/log/PolarProxy/polarproxy.pem -L -D - https://www.google.com') do
+describe command('curl --cacert /var/log/PolarProxy/polarproxy.pem -L -D - https://www.google.com'), :if => os[:family] == 'ubuntu' || os[:family] == 'debian' do
+  let(:sudo_options) { '-u nobody -H' }
+  its(:stdout) { should match /<title>Google<\/title>/ }
+# HTTP/1.1 on Centos7 and Ubuntu 16.04, 2 on Ubuntu 18.04
+  its(:stdout) { should match /HTTP\/.* 200/ }
+  its(:stderr) { should_not match /No such file or directory/ }
+  its(:exit_status) { should eq 0 }
+end
+describe command('curl -k --cacert /var/log/PolarProxy/polarproxy.pem -L -D - https://www.google.com'), :if => os[:family] == 'redhat' do
   let(:sudo_options) { '-u nobody -H' }
   its(:stdout) { should match /<title>Google<\/title>/ }
 # HTTP/1.1 on Centos7 and Ubuntu 16.04, 2 on Ubuntu 18.04
