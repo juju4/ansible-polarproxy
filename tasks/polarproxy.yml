@@ -19,6 +19,18 @@
     - /var/log/PolarProxy
     - "{{ polarproxy_home }}/PolarProxy"
 
+- name: Fetch PolarProxy hash
+  get_url:
+    url: "https://www.netresec.com/?download=PolarProxy&hash=sha256"
+    dest: "{{ polarproxy_home }}/polarproxy.tar.gz.sha256"
+    mode: '0600'
+    owner: "{{ polarproxy_user }}"
+
+- name: Retrieve hash in variable
+  slurp:
+    src: "{{ polarproxy_home }}/polarproxy.tar.gz.sha256"
+  register: polarproxy_hash
+
 - name: Fetch PolarProxy archive
   get_url:
     url: "{{ polarproxy_url }}"
