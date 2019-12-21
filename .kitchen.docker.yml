@@ -49,3 +49,6 @@ suites:
   - name: default
     run_list:
     attributes:
+  - name: default-rsyslog
+    run_list:
+    attributes:

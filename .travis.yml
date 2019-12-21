@@ -17,6 +17,12 @@ env:
   - distribution: ubuntu
     version: 16.04
     suite: default
+  - distribution: centos
+    version: 7
+    suite: default-rsyslog
+  - distribution: ubuntu
+    version: 18.04
+    suite: default-rsyslog
 
 before_install:
   - env
