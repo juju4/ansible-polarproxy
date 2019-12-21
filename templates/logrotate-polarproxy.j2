@@ -1,0 +1,12 @@
+{{ ansible_managed | comment }}
+## /etc/logrotate.d/polarproxy
+{{ polarproxy_syslog_target }} {
+    rotate {{ polarproxy_logrotate_days | default(30) | int }}
+    daily
+    missingok
+    notifempty
+    delaycompress
+    compress
+    create 640 {{ syslog_user | default('root') }} adm
+    sharedscripts
+}
