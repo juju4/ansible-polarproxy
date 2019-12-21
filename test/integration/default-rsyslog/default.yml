@@ -6,14 +6,6 @@
     https_proxy: "{{ lookup('env', 'https_proxy') }}"
     no_proxy: "{{ lookup('env', 'no_proxy') }}"
   vars:
-    syslogclient_server: ''
-    rsyslog_conf_d:
-      - rsyslog-polarproxy.conf
-    rsyslog_conf_d_extradirs:
-#      - { d: "{{ polarproxy_syslog_target | dirname }}", o: "{{ polarproxy_user }}" }
-      - { d: "{{ polarproxy_syslog_target | dirname }}" }
-    syslogclient_logrotate_syslog_template_extras:
-      - logrotate-polarproxy
+    polarproxy_syslog_enable: true
   roles:
     - juju4.polarproxy
-    - juju4.syslogclient

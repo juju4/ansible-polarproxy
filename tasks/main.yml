@@ -17,6 +17,9 @@
     creates: /var/log/PolarProxy/polarproxy.pem
   when: polarproxy_testing
 
+- include: rsyslog-polarproxy.yml
+  when: polarproxy_syslog_enable
+
 - name: Testing | Redirect 443 traffic to PolarProxy for user nobody
   iptables:
     table: nat

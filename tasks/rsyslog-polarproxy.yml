@@ -1,0 +1,36 @@
+---
+
+- name: Ensure rsyslog is present
+  package:
+    name: rsyslog
+    state: present
+  register: pkg_result
+  until: pkg_result is success
+
+- name: get rsyslog version
+  shell: "rsyslogd -v | awk -F'[ ,]' '/rsyslogd/ { print $2 }'"
+  environment:
+    PATH: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+  changed_when: false
+  register: rsyslog_v
+
+- name: Ensure base directory exists
+  file:
+    dest: "{{ polarproxy_syslog_target | dirname }}"
+    state: directory
+    mode: '0755'
+    owner: "{{ polarproxy_user }}"
+    group: root
+
+- name: setup rsyslog to send polarproxy logs to a specific target
+  template:
+    src: rsyslog-polarproxy.conf.j2
+    dest: /etc/rsyslog.d/30-polarproxy.conf
+    mode: '0644'
+    backup: yes
+  notify:
+    - restart rsyslog
+
+# only if file, not if remote syslog
+- include: logrotate.yml
+  when: "'/var/log/' in polarproxy_syslog_target"
