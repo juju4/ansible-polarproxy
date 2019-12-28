@@ -19,7 +19,7 @@
     dest: "{{ polarproxy_syslog_target | dirname }}"
     state: directory
     mode: '0755'
-    owner: "{{ polarproxy_user }}"
+    owner: "{{ syslog_user | default('root') }}"
     group: root
 
 - name: setup rsyslog to send polarproxy logs to a specific target
