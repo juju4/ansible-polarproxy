@@ -5,6 +5,10 @@ polarproxy_home: /var/_polarproxy
 polarproxy_url: 'https://www.netresec.com/?Download=PolarProxy'
 polarproxy_hash: sha256:f166d400d11bdbc3e1fc7697bad9afaf9760b86b52e47311b0ad41ff49a030c2
 
+polarproxy_dirs:
+  - { d: /var/log/PolarProxy, o: "{{ polarproxy_user }}", g: 'root', m: '0755' }
+  - { d: "{{ polarproxy_home }}/PolarProxy", o: "{{ polarproxy_user }}", g: 'root', m: '0755' }
+
 polarproxy_syslog_enable: false
 ## only valid if using juju4.syslogclient
 ## pay attention that /var/log/PolarProxy is owned by _polarproxy, not syslog user

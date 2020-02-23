@@ -13,3 +13,4 @@
     dest: /etc/logrotate.d/polarproxy
     mode: '0644'
     validate: 'logrotate -dv %s'
+    backup: yes

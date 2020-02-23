@@ -10,20 +10,19 @@
 
 - name: Ensure few directories exists
   file:
-    dest: "{{ item }}"
-    owner: "{{ polarproxy_user }}"
-    group: root
-    mode: '0775'
+    dest: "{{ item.d }}"
+    owner: "{{ item.o | default(polarproxy_user) }}"
+    group: "{{ item.g | default('root') }}"
+    mode: "{{ item.m | default('0755') }}"
     state: directory
-  with_items:
-    - /var/log/PolarProxy
-    - "{{ polarproxy_home }}/PolarProxy"
+  with_items: "{{ polarproxy_dirs }}"
 
 - name: Fetch PolarProxy hash
   command: "curl 'https://www.netresec.com/?download=PolarProxy&hash=sha256'"
   args:
     warn: false
   register: curl_hash
+  changed_when: false
 
 - name: Set hash
   set_fact:
