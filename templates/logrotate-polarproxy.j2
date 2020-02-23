@@ -10,4 +10,7 @@
     create 660 {{ syslog_user | default('root') }} {% if ansible_distribution == 'Ubuntu' %}syslog{% else %}root{% endif %}
 
     sharedscripts
+{% if ansible_distribution == 'Ubuntu' %}
+    su root syslog
+{% endif %}
 }
