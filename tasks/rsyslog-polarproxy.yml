@@ -21,6 +21,9 @@
     mode: '0755'
     owner: "{{ syslog_user | default('root') }}"
     group: root
+  when: >
+    "'/var/log/' in polarproxy_syslog_target" and
+    polarproxy_syslog_target|dirname != '/var/log'
 
 - name: setup rsyslog to send polarproxy logs to a specific target
   template:
