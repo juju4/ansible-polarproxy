@@ -3,7 +3,7 @@
 polarproxy_user: _polarproxy
 polarproxy_home: /var/_polarproxy
 polarproxy_url: 'https://www.netresec.com/?Download=PolarProxy'
-polarproxy_hash: sha256:2eff8da6789374c9836d676e7629c9b7cbffc91b5a79b7997a5db0aacaab30dc
+#polarproxy_hash: sha256:2eff8da6789374c9836d676e7629c9b7cbffc91b5a79b7997a5db0aacaab30dc
 
 polarproxy_dirs:
   - { d: /var/log/PolarProxy, o: "{{ polarproxy_user }}", g: 'root', m: '0755' }
