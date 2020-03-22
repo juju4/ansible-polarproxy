@@ -27,7 +27,7 @@
 - name: Set hash
   set_fact:
     polarproxy_hash: "sha256:{{ curl_hash.stdout }}"
-  when: curl_hash.stdout is defined and not polarproxy_hash|string
+  when: curl_hash.stdout is defined and (polarproxy_hash is not defined or not polarproxy_hash)
 
 - name: Fetch PolarProxy archive
   get_url:
