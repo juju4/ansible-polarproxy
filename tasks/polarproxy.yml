@@ -36,6 +36,8 @@
     mode: '0600'
     owner: "{{ polarproxy_user }}"
     checksum: "{{ polarproxy_hash | default(omit) }}"
+  register: dl_result
+  until: dl_result is success
 
 - name: Unarchive PolarProxy
   unarchive:
