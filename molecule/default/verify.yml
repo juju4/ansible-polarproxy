@@ -1,0 +1,79 @@
+---
+
+- name: Verify
+  hosts: polarproxy
+  tasks:
+    - name: Ensure /var/_polarproxy/PolarProxy/System.Runtime.dll config file is present
+      stat:
+        path: /var/_polarproxy/PolarProxy/System.Runtime.dll
+      register: dll
+    - name: Validate dll present
+      assert:
+        that:
+          - dll.stat.exists
+          - dll.stat.size != 0
+          - dll.stat.mode == '0644'
+          - dll.stat.pw_name == '_polarproxy'
+
+    - name: Ensure /var/_polarproxy/PolarProxy/PolarProxy bin file is present
+      stat:
+        path: /var/_polarproxy/PolarProxy/PolarProxy
+      register: bin
+    - name: Validate bin present
+      assert:
+        that:
+          - bin.stat.exists
+          - bin.stat.size != 0
+          - bin.stat.mode == '0744'
+          - bin.stat.pw_name == '_polarproxy'
+
+    - name: Ensure /etc/systemd/system/PolarProxy.service file is present
+      stat:
+        path: /etc/systemd/system/PolarProxy.service
+      register: systemd
+    - name: Validate systemd file present
+      assert:
+        that:
+          - systemd.stat.exists
+          - systemd.stat.size != 0
+          - systemd.stat.mode == '0644'
+          - systemd.stat.pw_name == 'root'
+
+    - name: Ensure process is running
+      command: pgrep -u root PolarProxy
+      register: ps
+      changed_when: false
+      ignore_errors: true
+    - name: Validate ps output
+      assert:
+        that: ps.stdout
+      ignore_errors: true
+
+    - name: check all processes
+      command: ps aux
+      changed_when: false
+      register: psa
+    - debug: var=psa verbosity=1
+
+    - name: Ensure ports are listening
+      wait_for:
+        host: "{{ item.h }}"
+        port: "{{ item.p }}"
+        timeout: 10
+      with_items:
+        - { h: localhost, p: 10443 }
+      ignore_errors: true
+
+    - name: Test curl www.google.com
+      uri:
+        url: http://www.google.com
+        return_content: yes
+        # no cacert option?
+        validate_certs: no
+      register: curl1
+      changed_when: false
+    - name: Validate curl1 output
+      assert:
+        that: >
+          "'<title>Google</title>' in curl1.content and curl1.status == 200"
+      ignore_errors: true
