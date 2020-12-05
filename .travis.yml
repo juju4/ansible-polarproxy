@@ -31,12 +31,12 @@ before_install:
   - env
   - pwd
   - find -ls
-## use appropriate role path and not github name
+  ## use appropriate role path and not github name
   - "[ -f get-dependencies.sh ] && sh -x get-dependencies.sh"
   - sudo pip install ansible
   - 'echo "gem: --no-document" >> ~/.gemrc'
-## need to use chef gem for some reason? BAD PATH https://github.com/chef/chef-dk/issues/15
-#  - chef gem install kitchen
+  ## need to use chef gem for some reason? BAD PATH https://github.com/chef/chef-dk/issues/15
+  # - chef gem install kitchen
   - gem install kitchen
   - gem install kitchen-ansible
   - gem install kitchen-sync
@@ -46,7 +46,7 @@ before_install:
   - KITCHEN_YAML=.kitchen.docker.yml kitchen diagnose --all
 
 script:
-## avoid locale issue under xenial docker, https://github.com/pypa/pip/issues/3575
+  ## avoid locale issue under xenial docker, https://github.com/pypa/pip/issues/3575
   - export LC_ALL=C.UTF-8
   - export LANG=C.UTF-8
   - KITCHEN_YAML=.kitchen.docker.yml kitchen verify ${suite}-${distribution}-${version//./}

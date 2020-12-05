@@ -3,7 +3,7 @@
 polarproxy_user: _polarproxy
 polarproxy_home: /var/_polarproxy
 polarproxy_url: 'https://www.netresec.com/?Download=PolarProxy'
-#polarproxy_hash: sha256:2eff8da6789374c9836d676e7629c9b7cbffc91b5a79b7997a5db0aacaab30dc
+# polarproxy_hash: sha256:2eff8da6789374c9836d676e7629c9b7cbffc91b5a79b7997a5db0aacaab30dc
 
 polarproxy_dirs:
   - { d: /var/log/PolarProxy, o: "{{ polarproxy_user }}", g: 'root', m: '0755' }
@@ -12,9 +12,9 @@ polarproxy_dirs:
 polarproxy_syslog_enable: false
 ## only valid if using juju4.syslogclient
 ## pay attention that /var/log/PolarProxy is owned by _polarproxy, not syslog user
-#polarproxy_syslog_target: /var/log/PolarProxy/polarproxy.log
+# polarproxy_syslog_target: /var/log/PolarProxy/polarproxy.log
 polarproxy_syslog_target: /var/log/polarproxy.log
-#polarproxy_syslog_target: @@remotesyslog
+# polarproxy_syslog_target: @@remotesyslog
 
 polarproxy_cgroups_restriction_enable: true
 polarproxy_cgroups_cpushares: '1024'

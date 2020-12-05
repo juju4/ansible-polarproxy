@@ -43,6 +43,7 @@
   unarchive:
     src: "{{ polarproxy_home }}/polarproxy.tar.gz"
     dest: "{{ polarproxy_home }}/PolarProxy"
+    mode: '0755'
     remote_src: true
   become: true
   become_user: "{{ polarproxy_user }}"
