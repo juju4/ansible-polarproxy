@@ -16,4 +16,9 @@ polarproxy_syslog_enable: false
 polarproxy_syslog_target: /var/log/polarproxy.log
 #polarproxy_syslog_target: @@remotesyslog
 
+polarproxy_cgroups_restriction_enable: true
+polarproxy_cgroups_cpushares: '1024'
+polarproxy_cgroups_cpuquota: '80%'
+polarproxy_cgroups_memorylimit: '4G'
+
 polarproxy_testing: true

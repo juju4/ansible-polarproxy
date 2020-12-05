@@ -9,6 +9,38 @@ User={{ polarproxy_user }}
 WorkingDirectory={{ polarproxy_home }}/PolarProxy
 ExecStart={{ polarproxy_home }}/PolarProxy/PolarProxy -v -p 10443,80,443 -x /var/log/PolarProxy/polarproxy.cer -f /var/log/PolarProxy/proxyflows.log -o /var/log/PolarProxy/ --certhttp 10080 --insecure
 SendSIGKILL=no
+# Security hardening
+NoNewPrivileges=yes
+PrivateTmp=true
+PrivateDevices=yes
+ProtectHome=yes
+ProtectSystem=full
+MemoryDenyWriteExecute=true
+{% if (ansible_os_family == 'RedHat' and ansible_distribution_major_version|int > 7) or (ansible_distribution == "Ubuntu" and ansible_distribution_major_version|int >= 18) %}
+InaccessiblePaths=/proc
+ProtectKernelTunables=true
+ProtectKernelModules=yes
+ProtectControlGroups=true
+RestrictRealtime=true
+RestrictNamespaces=~user mnt
+LockPersonality=true
+{% endif %}
+RestrictAddressFamilies=AF_INET AF_INET6
+{% if not (ansible_virtualization_type is defined and
+          ansible_virtualization_type == "docker"
+        )
+%}
+{% if (ansible_os_family == 'RedHat' and ansible_distribution_major_version|int >= 8) or (ansible_distribution == "Ubuntu" and ansible_distribution_major_version|int >= 18) %}
+SystemCallFilter=~@debug @mount @cpu-emulation @obsolete @privileged
+{% endif %}
+# When system call is disallowed, return error code instead of killing process
+SystemCallErrorNumber=EPERM
+{% endif %}
+{% if polarproxy_cgroups_restriction_enable|bool %}
+CPUShares={{ polarproxy_cgroups_cpushares | default('1024') }}
+CPUQuota={{ polarproxy_cgroups_cpuquota | default('80%') }}
+MemoryLimit={{ polarproxy_cgroups_memorylimit | default('4G') }}
+{% endif %}
 
 [Install]
 WantedBy=multi-user.target
