@@ -18,15 +18,15 @@
   with_items: "{{ polarproxy_dirs }}"
 
 - name: Fetch PolarProxy hash
-  command: "curl 'https://www.netresec.com/?download=PolarProxy&hash=sha256'"
-  args:
-    warn: false
-  register: curl_hash
+  uri:
+    url: 'https://www.netresec.com/?download=PolarProxy&hash=sha256'
+    return_content: yes
+  register: hash
   changed_when: false
 
 - name: Set hash
   set_fact:
-    polarproxy_hash: "sha256:{{ curl_hash.stdout }}"
+    polarproxy_hash: "sha256:{{ hash.content }}"
   when: curl_hash.stdout is defined and (polarproxy_hash is not defined or not polarproxy_hash)
 
 - name: Fetch PolarProxy archive
