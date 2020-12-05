@@ -24,12 +24,13 @@ def test_files(host, filename, filemode, user):
 #    socket = host.socket("tcp://10443")
 #    assert(socket.is_listening)
 
+
 def test_curl1(host):
     command = """curl --cacert /var/log/PolarProxy/polarproxy.pem -L -D - \
             https://www.google.com"""
     with host.sudo("nobody"):
         cmd = host.run(command)
-        assert '<title>Google<\/title>' in cmd.stdout
+        assert '<title>Google</title>' in cmd.stdout
         assert 'HTTP/2 200' in cmd.stdout
 
 
