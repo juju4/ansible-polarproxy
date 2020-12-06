@@ -1,6 +1,10 @@
 [![Build Status - Master](https://travis-ci.org/juju4/ansible-polarproxy.svg?branch=master)](https://travis-ci.org/juju4/ansible-polarproxy)
 [![Build Status - Devel](https://travis-ci.org/juju4/ansible-polarproxy.svg?branch=devel)](https://travis-ci.org/juju4/ansible-polarproxy/branches)
 
+[![Actions Status - Master](https://github.com/juju4/ansible-polarproxy/workflows/AnsibleCI/badge.svg)](https://github.com/juju4/ansible-polarproxy/actions?query=branch%3Amaster)
+[![Actions Status - Devel](https://github.com/juju4/ansible-polarproxy/workflows/AnsibleCI/badge.svg?branch=devel)](https://github.com/juju4/ansible-polarproxy/actions?query=branch%3Adevel)
+
+
 # PolarProxy install
 
 This role will install [Netresec PolarProxy](https://www.netresec.com/?page=PolarProxy)
@@ -10,10 +14,11 @@ This role will install [Netresec PolarProxy](https://www.netresec.com/?page=Pola
 ### Ansible
 It was tested on the following versions:
  * 2.8
+ * 2.10
 
 ### Operating systems
 
-Tested with molecule on Ubuntu 16.04 and 18.04
+Tested with molecule on Ubuntu 16.04, 18.04, 20.04 and Centos 7-8
 
 ## Example Playbook
 
@@ -54,7 +59,7 @@ $ vagrant ssh
 
 ## Troubleshooting & Known issues
 
-*
+* Use as explicit proxy
 ```
 Oct 01 00:04:31 testhostname PolarProxy[49741]: [10443] n.n.n.n -> N/A System.IO.IOException : The handshake failed due to an unexpected packet format.
 Oct 01 00:04:31 testhostname PolarProxy[49741]: [10443] n.n.n.n -> N/A Internal and/or external SSL session did not authenticate successfully
