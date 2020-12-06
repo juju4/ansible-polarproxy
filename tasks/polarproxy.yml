@@ -23,6 +23,7 @@
     return_content: yes
   register: hash
   changed_when: false
+  until: hash is success
 
 - name: Set hash
   set_fact:
