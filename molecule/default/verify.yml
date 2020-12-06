@@ -12,7 +12,7 @@
         that:
           - dll.stat.exists
           - dll.stat.size != 0
-          - dll.stat.mode == '0644'
+          - dll.stat.mode == '0755'
           - dll.stat.pw_name == '_polarproxy'
 
     - name: Ensure /var/_polarproxy/PolarProxy/PolarProxy bin file is present
@@ -24,7 +24,7 @@
         that:
           - bin.stat.exists
           - bin.stat.size != 0
-          - bin.stat.mode == '0744'
+          - bin.stat.mode == '0755'
           - bin.stat.pw_name == '_polarproxy'
 
     - name: Ensure /etc/systemd/system/PolarProxy.service file is present
