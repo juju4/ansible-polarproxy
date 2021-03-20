@@ -58,7 +58,8 @@
   notify:
     - reload systemd
 
-- meta: flush_handlers
+- name: Flush handlers
+  meta: flush_handlers
 
 - name: Ensure PolarProxy is enabled and started
   service:
