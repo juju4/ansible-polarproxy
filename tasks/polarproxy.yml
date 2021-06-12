@@ -68,7 +68,7 @@
     state: started
   when: >
     not (ansible_virtualization_type is defined and
-          (ansible_virtualization_type == "docker" or ansible_virtualization_type == "VirtualPC")
+          (ansible_virtualization_type == "docker" or ansible_virtualization_type == "containerd")
         )
 
 - name: Docker | start polarproxy
@@ -82,5 +82,5 @@
   become_user: "{{ polarproxy_user }}"
   when: >
     (ansible_virtualization_type is defined and
-          (ansible_virtualization_type == "docker" or ansible_virtualization_type == "VirtualPC")
+          (ansible_virtualization_type == "docker" or ansible_virtualization_type == "containerd")
         )
