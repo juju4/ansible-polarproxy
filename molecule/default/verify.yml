@@ -62,7 +62,7 @@
         timeout: 10
       with_items:
         - { h: localhost, p: 10443 }
-      ignore_errors: true
+      failed_when: false
 
     - name: Test curl www.google.com
       uri:
@@ -76,4 +76,4 @@
       assert:
         that: >
           "'<title>Google</title>' in curl1.content and curl1.status == 200"
-      ignore_errors: true
+      failed_when: false
