@@ -15,9 +15,9 @@ PrivateTmp=true
 PrivateDevices=yes
 ProtectHome=yes
 ProtectSystem=full
-MemoryDenyWriteExecute=true
+#MemoryDenyWriteExecute=true
 {% if (ansible_os_family == 'RedHat' and ansible_distribution_major_version|int > 7) or (ansible_distribution == "Ubuntu" and ansible_distribution_major_version|int >= 18) %}
-InaccessiblePaths=/proc
+#InaccessiblePaths=/proc
 ProtectKernelTunables=true
 ProtectKernelModules=yes
 ProtectControlGroups=true
