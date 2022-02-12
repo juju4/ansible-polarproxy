@@ -39,5 +39,5 @@
     - restart rsyslog
 
 # only if file, not if remote syslog
-- include: logrotate.yml
+- import_tasks: logrotate.yml
   when: "'/var/log/' in polarproxy_syslog_target"
