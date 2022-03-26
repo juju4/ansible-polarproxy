@@ -4,11 +4,11 @@
   hosts: polarproxy
   tasks:
     - name: Ensure /var/_polarproxy/PolarProxy/System.Runtime.dll config file is present
-      stat:
+      ansible.builtin.stat:
         path: /var/_polarproxy/PolarProxy/System.Runtime.dll
       register: dll
     - name: Validate dll present
-      assert:
+      ansible.builtin.assert:
         that:
           - dll.stat.exists
           - dll.stat.size != 0
@@ -16,11 +16,11 @@
           - dll.stat.pw_name == '_polarproxy'
 
     - name: Ensure /var/_polarproxy/PolarProxy/PolarProxy bin file is present
-      stat:
+      ansible.builtin.stat:
         path: /var/_polarproxy/PolarProxy/PolarProxy
       register: bin
     - name: Validate bin present
-      assert:
+      ansible.builtin.assert:
         that:
           - bin.stat.exists
           - bin.stat.size != 0
@@ -28,11 +28,11 @@
           - bin.stat.pw_name == '_polarproxy'
 
     - name: Ensure /etc/systemd/system/PolarProxy.service file is present
-      stat:
+      ansible.builtin.stat:
         path: /etc/systemd/system/PolarProxy.service
       register: systemd
     - name: Validate systemd file present
-      assert:
+      ansible.builtin.assert:
         that:
           - systemd.stat.exists
           - systemd.stat.size != 0
@@ -40,28 +40,28 @@
           - systemd.stat.pw_name == 'root'
 
     - name: Ensure pgrep is present
-      package:
+      ansible.builtin.package:
         name: procps-ng
         state: present
       when: ansible_os_family == "RedHat" and ansible_distribution_major_version|int >= 8
     - name: Ensure process is running
-      command: pgrep -u _polarproxy PolarProxy
+      ansible.builtin.command: pgrep -u _polarproxy PolarProxy
       register: ps
       changed_when: false
       ignore_errors: true
     - name: Validate ps output
-      assert:
+      ansible.builtin.assert:
         that: ps.stdout
 
     - name: check all processes
-      command: ps aux
+      ansible.builtin.command: ps aux
       changed_when: false
       register: psa
     - name: Debug | ps aux output
-      debug: var=psa verbosity=1
+      ansible.builtin.debug: var=psa verbosity=1
 
     - name: Ensure ports are listening
-      wait_for:
+      ansible.builtin.wait_for:
         host: "{{ item.h }}"
         port: "{{ item.p }}"
         timeout: 10
@@ -70,7 +70,7 @@
       failed_when: false
 
     - name: Test curl www.google.com
-      uri:
+      ansible.builtin.uri:
         url: http://www.google.com
         return_content: yes
         # no cacert option?
@@ -78,7 +78,7 @@
       register: curl1
       changed_when: false
     - name: Validate curl1 output
-      assert:
+      ansible.builtin.assert:
         that: >
           "'<title>Google</title>' in curl1.content and curl1.status == 200"
       failed_when: false

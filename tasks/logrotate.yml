@@ -1,14 +1,14 @@
 ---
 
 - name: Ensure logrotate package is present
-  package:
+  ansible.builtin.package:
     name: logrotate
     state: present
   register: pkg_result
   until: pkg_result is success
 
 - name: add logrotate configuration for polarproxy log
-  template:
+  ansible.builtin.template:
     src: logrotate-polarproxy.j2
     dest: /etc/logrotate.d/polarproxy
     mode: '0644'

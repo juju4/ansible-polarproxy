@@ -2,14 +2,14 @@
 # https://www.netresec.com/?page=PolarProxy
 
 - name: add polarproxy user
-  user:
+  ansible.builtin.user:
     name: "{{ polarproxy_user }}"
     comment: PolarProxy service
     system: true
     home: "{{ polarproxy_home }}"
 
 - name: Ensure few directories exists
-  file:
+  ansible.builtin.file:
     dest: "{{ item.d }}"
     owner: "{{ item.o | default(polarproxy_user) }}"
     group: "{{ item.g | default('root') }}"
@@ -18,7 +18,7 @@
   with_items: "{{ polarproxy_dirs }}"
 
 - name: Fetch PolarProxy hash
-  uri:
+  ansible.builtin.uri:
     url: 'https://www.netresec.com/?download=PolarProxy&hash=sha256'
     return_content: yes
   register: hash
@@ -26,12 +26,12 @@
   until: hash is success
 
 - name: Set hash
-  set_fact:
+  ansible.builtin.set_fact:
     polarproxy_hash: "sha256:{{ hash.content }}"
   when: curl_hash.stdout is defined and (polarproxy_hash is not defined or not polarproxy_hash)
 
 - name: Fetch PolarProxy archive
-  get_url:
+  ansible.builtin.get_url:
     url: "{{ polarproxy_url }}"
     dest: "{{ polarproxy_home }}/polarproxy.tar.gz"
     mode: '0600'
@@ -41,7 +41,7 @@
   until: dl_result is success
 
 - name: Unarchive PolarProxy
-  unarchive:
+  ansible.builtin.unarchive:
     src: "{{ polarproxy_home }}/polarproxy.tar.gz"
     dest: "{{ polarproxy_home }}/PolarProxy"
     # FIXME! need mode preserve archive or at least file+dirs
@@ -51,7 +51,7 @@
   become_user: "{{ polarproxy_user }}"
 
 - name: Ensure PolarProxy systemd service is configured
-  template:
+  ansible.builtin.template:
     src: PolarProxy.service.j2
     dest: /etc/systemd/system/PolarProxy.service
     mode: '0644'
@@ -59,10 +59,10 @@
     - reload systemd
 
 - name: Flush handlers
-  meta: flush_handlers
+  ansible.builtin.meta: flush_handlers
 
 - name: Ensure PolarProxy is enabled and started
-  service:
+  ansible.builtin.service:
     name: PolarProxy
     enabled: true
     state: started
@@ -72,7 +72,7 @@
         )
 
 - name: Docker | start polarproxy
-  shell: >
+  ansible.builtin.shell: >
     nohup {{ polarproxy_home }}/PolarProxy/PolarProxy -v -p 10443,80,443 \
       -x /var/log/PolarProxy/polarproxy.cer -f /var/log/PolarProxy/proxyflows.log \
       -o /var/log/PolarProxy/ --certhttp 10080 --insecure &

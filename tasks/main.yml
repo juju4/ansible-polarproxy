@@ -1,18 +1,18 @@
 ---
 
 - name: Include distribution-specific variables
-  include_vars: "{{ ansible_os_family }}.yml"
+  ansible.builtin.include_vars: "{{ ansible_os_family }}.yml"
 
 - import_tasks: polarproxy.yml
 
 - name: Testing | Install testing tools
-  package:
+  ansible.builtin.package:
     name: "{{ polarproxy_testing_pkgs }}"
     state: present
   when: polarproxy_testing
 
 - name: Testing | Export PolarProxy DER certificate to PEM for curl
-  command: openssl x509 -inform DER -outform PEM -text -in /var/log/PolarProxy/polarproxy.cer -out /var/log/PolarProxy/polarproxy.pem
+  ansible.builtin.command: openssl x509 -inform DER -outform PEM -text -in /var/log/PolarProxy/polarproxy.cer -out /var/log/PolarProxy/polarproxy.pem
   args:
     creates: /var/log/PolarProxy/polarproxy.pem
   when: polarproxy_testing
@@ -21,7 +21,7 @@
   when: polarproxy_syslog_enable
 
 - name: Testing | Redirect 443 traffic to PolarProxy for user nobody
-  iptables:
+  ansible.builtin.iptables:
     table: nat
     chain: OUTPUT
     protocol: tcp
