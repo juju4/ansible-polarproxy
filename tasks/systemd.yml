@@ -13,5 +13,5 @@
     dest: /etc/systemd/system/PolarProxy.service.d/override.conf
     mode: '0644'
   notify:
-    - reload systemd
-    - restart PolarProxy
+    - Reload systemd
+    - Restart PolarProxy

@@ -1,7 +1,7 @@
 ---
 # https://www.netresec.com/?page=PolarProxy
 
-- name: add polarproxy user
+- name: Add polarproxy user
   ansible.builtin.user:
     name: "{{ polarproxy_user }}"
     comment: PolarProxy service
@@ -56,7 +56,7 @@
     dest: /etc/systemd/system/PolarProxy.service
     mode: '0644'
   notify:
-    - reload systemd
+    - Reload systemd
 
 - name: Flush handlers
   ansible.builtin.meta: flush_handlers

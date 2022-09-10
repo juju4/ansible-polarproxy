@@ -43,7 +43,7 @@
       ansible.builtin.package:
         name: procps-ng
         state: present
-      when: ansible_os_family == "RedHat" and ansible_distribution_major_version|int >= 8
+      when: ansible_os_family == "RedHat" and ansible_distribution_major_version | int >= 8
     - name: Ensure process is running
       ansible.builtin.command: pgrep -u _polarproxy PolarProxy
       register: ps
@@ -53,7 +53,7 @@
       ansible.builtin.assert:
         that: ps.stdout
 
-    - name: check all processes
+    - name: Check all processes
       ansible.builtin.command: ps aux
       changed_when: false
       register: psa

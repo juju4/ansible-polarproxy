@@ -7,7 +7,7 @@
   register: pkg_result
   until: pkg_result is success
 
-- name: add logrotate configuration for polarproxy log
+- name: Add logrotate configuration for polarproxy log
   ansible.builtin.template:
     src: logrotate-polarproxy.j2
     dest: /etc/logrotate.d/polarproxy
