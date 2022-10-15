@@ -3,7 +3,8 @@
 - name: Include distribution-specific variables
   ansible.builtin.include_vars: "{{ ansible_os_family }}.yml"
 
-- import_tasks: polarproxy.yml
+- name: Import polarproxy
+  ansible.builtin.import_tasks: polarproxy.yml
 
 - name: Testing | Install testing tools
   ansible.builtin.package:
@@ -17,7 +18,8 @@
     creates: /var/log/PolarProxy/polarproxy.pem
   when: polarproxy_testing
 
-- import_tasks: rsyslog-polarproxy.yml
+- name: Import rsyslog-polarproxy
+  ansible.builtin.import_tasks: rsyslog-polarproxy.yml
   when: polarproxy_syslog_enable
 
 - name: Testing | Redirect 443 traffic to PolarProxy for user nobody
