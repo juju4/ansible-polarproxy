@@ -3,6 +3,7 @@
 polarproxy_deps:
   - tar
   - gzip
+  - unzip
 
 polarproxy_testing_pkgs:
   - iproute2
