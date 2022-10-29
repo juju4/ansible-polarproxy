@@ -3,6 +3,11 @@
 - name: Include distribution-specific variables
   ansible.builtin.include_vars: "{{ ansible_os_family }}.yml"
 
+- name: Ensure dependencies are present
+  ansible.builtin.package:
+    name: "{{ polarproxy_deps }}"
+    state: present
+
 - name: Import polarproxy
   ansible.builtin.import_tasks: polarproxy.yml
 

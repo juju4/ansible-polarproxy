@@ -1,5 +1,9 @@
 ---
 
+polarproxy_deps:
+  - tar
+  - gzip
+
 polarproxy_testing_pkgs:
   - iproute
   - curl
