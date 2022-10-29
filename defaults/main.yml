@@ -22,3 +22,5 @@ polarproxy_cgroups_cpuquota: '80%'
 polarproxy_cgroups_memorylimit: '4G'
 
 polarproxy_testing: true
+
+is_container: false

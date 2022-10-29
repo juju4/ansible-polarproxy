@@ -66,10 +66,8 @@
     name: PolarProxy
     enabled: true
     state: started
-  when: >
-    not (ansible_virtualization_type is defined and
-          (ansible_virtualization_type == "docker" or ansible_virtualization_type == "containerd")
-        )
+  when:
+    - not is_container|bool
 
 - name: Docker | start polarproxy
   ansible.builtin.shell: >
@@ -80,7 +78,5 @@
     creates: /var/log/PolarProxy/polarproxy.cer
   become: true
   become_user: "{{ polarproxy_user }}"
-  when: >
-    (ansible_virtualization_type is defined and
-          (ansible_virtualization_type == "docker" or ansible_virtualization_type == "containerd")
-        )
+  when:
+    - is_container|bool

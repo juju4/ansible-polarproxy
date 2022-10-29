@@ -3,6 +3,17 @@
 - name: Include distribution-specific variables
   ansible.builtin.include_vars: "{{ ansible_os_family }}.yml"
 
+- name: Set fact is_container
+  ansible.builtin.set_fact:
+    is_container: true
+  when: >
+    (ansible_virtualization_type is defined and
+      (ansible_virtualization_type == "docker"
+       or ansible_virtualization_type == "containerd"
+       or ansible_virtualization_type == "container"
+      )
+    )
+
 - name: Ensure dependencies are present
   ansible.builtin.package:
     name: "{{ polarproxy_deps }}"
