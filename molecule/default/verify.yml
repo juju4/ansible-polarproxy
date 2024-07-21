@@ -39,11 +39,16 @@
           - systemd.stat.mode == '0644'
           - systemd.stat.pw_name == 'root'
 
-    - name: Ensure pgrep is present
+    - name: RedHat | Ensure pgrep is present
       ansible.builtin.package:
         name: procps-ng
         state: present
       when: ansible_os_family == "RedHat" and ansible_distribution_major_version | int >= 8
+    - name: Debian | Ensure pgrep is present
+      ansible.builtin.package:
+        name: procps
+        state: present
+      when: ansible_os_family == "Debian"
     - name: Ensure process is running
       ansible.builtin.command: pgrep -u _polarproxy PolarProxy
       register: ps
