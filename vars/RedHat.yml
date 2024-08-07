@@ -4,6 +4,7 @@ polarproxy_deps:
   - tar
   - gzip
   - unzip
+  - systemd
 
 polarproxy_testing_pkgs:
   - iproute
