@@ -8,7 +8,7 @@ polarproxy_deps:
 
 polarproxy_testing_pkgs:
   - iproute
-  - curl
+  - curl-minimal
   - iptables
   - openssl
 
