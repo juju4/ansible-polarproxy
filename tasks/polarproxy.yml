@@ -73,7 +73,7 @@
   ansible.builtin.shell: >
     nohup {{ polarproxy_home }}/PolarProxy/PolarProxy -v -p 10443,80,443 \
       -x /var/log/PolarProxy/polarproxy.cer -f /var/log/PolarProxy/proxyflows.log \
-      -o /var/log/PolarProxy/ --certhttp 10080 --insecure &
+      -o /var/log/PolarProxy/ --certhttp 10080 --leafcert sign &
   args:
     creates: /var/log/PolarProxy/polarproxy.cer
   become: true

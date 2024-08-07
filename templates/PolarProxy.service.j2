@@ -7,7 +7,7 @@ After=network.target
 Type=simple
 User={{ polarproxy_user }}
 WorkingDirectory={{ polarproxy_home }}/PolarProxy
-ExecStart={{ polarproxy_home }}/PolarProxy/PolarProxy -v -p 10443,80,443 -x /var/log/PolarProxy/polarproxy.cer -f /var/log/PolarProxy/proxyflows.log -o /var/log/PolarProxy/ --certhttp 10080 --insecure
+ExecStart={{ polarproxy_home }}/PolarProxy/PolarProxy -v -p 10443,80,443 -x /var/log/PolarProxy/polarproxy.cer -f /var/log/PolarProxy/proxyflows.log -o /var/log/PolarProxy/ --certhttp 10080 --leafcert sign
 SendSIGKILL=no
 # Security hardening
 NoNewPrivileges=yes
