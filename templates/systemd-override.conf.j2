@@ -28,6 +28,6 @@ SystemCallErrorNumber=EPERM
 {% endif %}
 {% endif %}
 {% endif %}
-CPUShares={{ polarproxy_cgroups_cpushares | default('1024') }}
+CPUWeight={{ polarproxy_cgroups_cpushares | default('1024') }}
 CPUQuota={{ polarproxy_cgroups_cpuquota | default('80%') }}
-MemoryLimit={{ polarproxy_cgroups_memorylimit | default('4G') }}
+MemoryMax={{ polarproxy_cgroups_memorylimit | default('4G') }}
