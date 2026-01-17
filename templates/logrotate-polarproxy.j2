@@ -7,10 +7,10 @@
     notifempty
     delaycompress
     compress
-    create 660 {{ syslog_user | default('root') }} {% if ansible_distribution == 'Ubuntu' %}syslog{% else %}root{% endif %}
+    create 660 {{ syslog_user | default('root') }} {% if ansible_facts['distribution'] == 'Ubuntu' %}syslog{% else %}root{% endif %}
 
     sharedscripts
-{% if ansible_distribution == 'Ubuntu' %}
+{% if ansible_facts['distribution'] == 'Ubuntu' %}
     su root syslog
 {% endif %}
 }

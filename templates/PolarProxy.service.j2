@@ -16,7 +16,7 @@ PrivateDevices=yes
 ProtectHome=yes
 ProtectSystem=full
 #MemoryDenyWriteExecute=true
-{% if (ansible_os_family == 'RedHat' and ansible_distribution_major_version|int > 7) or (ansible_distribution == "Ubuntu" and ansible_distribution_major_version|int >= 18) %}
+{% if (ansible_facts['os_family'] == 'RedHat' and ansible_facts['distribution_major_version']|int > 7) or (ansible_facts['distribution'] == "Ubuntu" and ansible_facts['distribution_major_version']|int >= 18) %}
 #InaccessiblePaths=/proc
 ProtectKernelTunables=true
 ProtectKernelModules=yes
@@ -26,11 +26,11 @@ RestrictNamespaces=~user mnt
 LockPersonality=true
 {% endif %}
 RestrictAddressFamilies=AF_INET AF_INET6
-{% if not (ansible_virtualization_type is defined and
-          ansible_virtualization_type == "docker"
+{% if not (ansible_facts['virtualization_type'] is defined and
+          ansible_facts['virtualization_type'] == "docker"
         )
 %}
-{% if (ansible_os_family == 'RedHat' and ansible_distribution_major_version|int >= 8) or (ansible_distribution == "Ubuntu" and ansible_distribution_major_version|int >= 18) %}
+{% if (ansible_facts['os_family'] == 'RedHat' and ansible_facts['distribution_major_version']|int >= 8) or (ansible_facts['distribution'] == "Ubuntu" and ansible_facts['distribution_major_version']|int >= 18) %}
 SystemCallFilter=~@debug @mount @cpu-emulation @obsolete @privileged
 {% endif %}
 # When system call is disallowed, return error code instead of killing process
