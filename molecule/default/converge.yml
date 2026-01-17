@@ -6,13 +6,13 @@
     https_proxy: "{{ lookup('env', 'https_proxy') }}"
     no_proxy: "{{ lookup('env', 'no_proxy') }}"
   pre_tasks:
-    - name: Debug | var ansible_virtualization_type
+    - name: Debug | var ansible_facts['virtualization_type']
       ansible.builtin.debug:
-        var: ansible_virtualization_type
+        var: ansible_facts['virtualization_type']
     - name: Debian | Refresh apt cache
       ansible.builtin.apt:
         update_cache: yes
         cache_valid_time: 3600
-      when: ansible_os_family == "Debian"
+      when: ansible_facts['os_family'] == "Debian"
   roles:
     - role: juju4.polarproxy
