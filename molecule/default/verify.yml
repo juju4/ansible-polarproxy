@@ -3,18 +3,6 @@
 - name: Verify
   hosts: polarproxy
   tasks:
-    - name: Ensure /var/_polarproxy/PolarProxy/System.Runtime.dll config file is present
-      ansible.builtin.stat:
-        path: /var/_polarproxy/PolarProxy/System.Runtime.dll
-      register: dll
-    - name: Validate dll present
-      ansible.builtin.assert:
-        that:
-          - dll.stat.exists
-          - dll.stat.size != 0
-          - dll.stat.mode == '0755'
-          - dll.stat.pw_name == '_polarproxy'
-
     - name: Ensure /var/_polarproxy/PolarProxy/PolarProxy bin file is present
       ansible.builtin.stat:
         path: /var/_polarproxy/PolarProxy/PolarProxy

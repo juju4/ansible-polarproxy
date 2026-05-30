@@ -8,7 +8,10 @@ Type=simple
 User={{ polarproxy_user }}
 WorkingDirectory={{ polarproxy_home }}/PolarProxy
 ExecStart={{ polarproxy_home }}/PolarProxy/PolarProxy -v -p 10443,80,443 -x /var/log/PolarProxy/polarproxy.cer -f /var/log/PolarProxy/proxyflows.log -o /var/log/PolarProxy/ --certhttp 10080 --leafcert sign
-SendSIGKILL=no
+ExecReload=/bin/kill -HUP "$MAINPID"
+KillSignal=SIGINT
+FinalKillSignal=SIGTERM
+
 # Security hardening
 NoNewPrivileges=yes
 PrivateTmp=true
