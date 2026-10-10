@@ -1,8 +1,7 @@
-[![Actions Status - Master](https://github.com/juju4/ansible-polarproxy/workflows/AnsibleCI/badge.svg)](https://github.com/juju4/ansible-polarproxy/actions?query=branch%3Amaster)
-[![Actions Status - Devel](https://github.com/juju4/ansible-polarproxy/workflows/AnsibleCI/badge.svg?branch=devel)](https://github.com/juju4/ansible-polarproxy/actions?query=branch%3Adevel)
-
-
 # PolarProxy install
+
+[![Actions Status - Main](https://github.com/juju4/ansible-polarproxy/workflows/AnsibleCI/badge.svg)](https://github.com/juju4/ansible-polarproxy/actions?query=branch%3Amain)
+[![Actions Status - Devel](https://github.com/juju4/ansible-polarproxy/workflows/AnsibleCI/badge.svg?branch=devel)](https://github.com/juju4/ansible-polarproxy/actions?query=branch%3Adevel)
 
 This role will install [Netresec PolarProxy](https://www.netresec.com/?page=PolarProxy)
 
